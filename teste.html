@@ -1,0 +1,377 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Style Moda</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',sans-serif;background:#fff7fb;overflow-x:hidden;color:#111}
+html{scroll-behavior:smooth}
+
+.glass{
+background:rgba(255,255,255,.8);
+backdrop-filter:blur(20px);
+}
+
+.hero-overlay{
+background:linear-gradient(to right, rgba(255,255,255,.95), rgba(255,255,255,.15));
+}
+
+.product-card{
+transition:.5s cubic-bezier(.19,1,.22,1);
+}
+
+.product-card:hover{
+transform:translateY(-10px)
+}
+
+.product-card img{
+transition:1s
+}
+
+.product-card:hover img{
+transform:scale(1.08)
+}
+
+.btn-hover:hover{
+transform:translateY(-2px)
+}
+
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{background:#ec4899;border-radius:999px}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 w-full z-50 glass border-b border-pink-100">
+<div class="max-w-7xl mx-auto px-5 lg:px-10">
+<div class="h-20 flex items-center justify-between">
+
+<h1 class="text-2xl lg:text-3xl font-black tracking-[5px]">
+STYLE MODA
+</h1>
+
+<div class="hidden lg:flex items-center gap-10 uppercase text-[12px] tracking-[3px] font-semibold text-zinc-600">
+<a href="#" class="hover:text-pink-500 transition">Feminino</a>
+<a href="#" class="hover:text-pink-500 transition">Masculino</a>
+<a href="#" class="hover:text-pink-500 transition">Novidades</a>
+<a href="#" class="hover:text-pink-500 transition">Promoções</a>
+</div>
+
+<div class="flex items-center gap-3">
+
+<button class="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-pink-500 hover:text-white transition">
+🔍
+</button>
+
+<button id="cartButton" class="relative w-11 h-11 rounded-full bg-[#111] text-white shadow-xl flex items-center justify-center hover:bg-pink-500 transition">
+🛒
+<span id="cartCount" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-pink-500 text-[10px] font-bold flex items-center justify-center">0</span>
+</button>
+
+</div>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+
+<div class="absolute inset-0">
+<img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover">
+<div class="absolute inset-0 hero-overlay"></div>
+</div>
+
+<div class="relative z-10 max-w-7xl mx-auto px-5 lg:px-10 w-full">
+<div class="max-w-3xl">
+
+<p class="uppercase tracking-[5px] text-pink-500 font-semibold mb-6">
+Luxury Fashion
+</p>
+
+<h2 class="text-5xl md:text-7xl lg:text-8xl font-black leading-none text-[#111]">
+STYLE
+<br>
+MODA
+</h2>
+
+<p class="text-zinc-700 text-lg md:text-xl leading-relaxed mt-8 max-w-xl">
+Moda feminina e masculina com visual premium inspirado nas maiores lojas do mundo.
+</p>
+
+<div class="flex flex-wrap gap-4 mt-10">
+
+<button class="btn-hover transition bg-[#111] text-white px-8 h-14 rounded-full uppercase tracking-[3px] text-xs font-bold hover:bg-pink-500">
+Comprar Agora
+</button>
+
+<button class="btn-hover transition bg-white border border-pink-100 px-8 h-14 rounded-full uppercase tracking-[3px] text-xs font-bold hover:bg-pink-500 hover:text-white">
+Ver Coleção
+</button>
+
+</div>
+</div>
+</div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="py-24">
+<div class="max-w-7xl mx-auto px-5 lg:px-10">
+
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-16">
+<div>
+<p class="uppercase tracking-[4px] text-pink-500 text-sm font-semibold mb-4">
+Catálogo
+</p>
+
+<h2 class="text-4xl md:text-6xl font-black leading-tight">
+Produtos
+Premium
+</h2>
+</div>
+</div>
+
+<div id="productsGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8"></div>
+
+</div>
+</section>
+
+<!-- CART MODAL -->
+<div id="cartModal" class="fixed top-0 right-[-100%] w-full md:w-[450px] h-screen bg-white z-[100] shadow-2xl transition-all duration-500 overflow-y-auto">
+
+<div class="p-6 border-b border-zinc-100 flex items-center justify-between">
+<h2 class="text-2xl font-black">Seu Carrinho</h2>
+<button id="closeCart" class="text-3xl">×</button>
+</div>
+
+<div id="cartItems" class="p-6 space-y-5"></div>
+
+<div class="p-6 border-t border-zinc-100 sticky bottom-0 bg-white">
+<button class="w-full h-14 rounded-2xl bg-pink-500 text-white uppercase tracking-[3px] text-xs font-bold">
+Finalizar Compra
+</button>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-white border-t border-pink-100 py-16">
+<div class="max-w-7xl mx-auto px-5 lg:px-10">
+
+<div class="flex flex-col lg:flex-row justify-between gap-10">
+
+<div>
+<h2 class="text-3xl font-black tracking-[5px]">STYLE MODA</h2>
+<p class="text-zinc-500 mt-5 max-w-md leading-relaxed">
+Loja premium feminina e masculina inspirada nas maiores marcas fashion do mercado.
+</p>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-10 text-sm">
+<div>
+<h4 class="uppercase tracking-[3px] mb-5 text-zinc-400">Loja</h4>
+<div class="space-y-3 text-zinc-500">
+<p>Home</p>
+<p>Produtos</p>
+<p>Coleções</p>
+</div>
+</div>
+
+<div>
+<h4 class="uppercase tracking-[3px] mb-5 text-zinc-400">Social</h4>
+<div class="space-y-3 text-zinc-500">
+<p>Instagram</p>
+<p>TikTok</p>
+<p>WhatsApp</p>
+</div>
+</div>
+
+<div>
+<h4 class="uppercase tracking-[3px] mb-5 text-zinc-400">Contato</h4>
+<div class="space-y-3 text-zinc-500">
+<p>(00) 00000-0000</p>
+<p>stylemoda@email.com</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</footer>
+
+<!-- WHATSAPP -->
+<a href="#" class="fixed bottom-6 right-6 z-50">
+<div class="w-16 h-16 rounded-full bg-green-500 shadow-2xl flex items-center justify-center text-white text-2xl hover:scale-110 transition">
+✆
+</div>
+</a>
+
+<script>
+
+const products = [
+{
+name:'Vestido Luxury Premium',
+price:'289',
+oldPrice:'379',
+image:'https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1887&auto=format&fit=crop'
+},
+{
+name:'Blazer Feminino Elegance',
+price:'349',
+oldPrice:'429',
+image:'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop'
+},
+{
+name:'Streetwear Black Style',
+price:'219',
+oldPrice:'299',
+image:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=2070&auto=format&fit=crop'
+},
+{
+name:'Conjunto Premium',
+price:'399',
+oldPrice:'499',
+image:'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop'
+}
+];
+
+const grid = document.getElementById('productsGrid');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+
+let cart = [];
+
+function renderProducts(){
+
+for(let i = 0; i < 16; i++){
+
+const product = products[i % products.length];
+
+const card = document.createElement('div');
+
+card.className = 'product-card bg-white rounded-[30px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,.06)]';
+
+card.innerHTML = `
+
+<div class="relative overflow-hidden">
+
+<img src="${product.image}" class="w-full h-[280px] md:h-[420px] object-cover">
+
+<div class="absolute top-4 left-4 bg-pink-500 text-white text-[10px] uppercase tracking-[2px] px-3 py-2 rounded-full font-bold">
+Novo
+</div>
+
+<div class="absolute top-4 right-4 flex flex-col gap-3">
+
+<button onclick="quickView('${product.name}')" class="w-10 h-10 rounded-full bg-white shadow-lg hover:bg-pink-500 hover:text-white transition">
+👁
+</button>
+
+<button onclick="addWishlist('${product.name}')" class="w-10 h-10 rounded-full bg-white shadow-lg hover:bg-pink-500 hover:text-white transition">
+♡
+</button>
+
+</div>
+
+</div>
+
+<div class="p-5">
+
+<h3 class="text-lg md:text-xl font-bold leading-snug">
+${product.name}
+</h3>
+
+<div class="flex items-center gap-2 mt-3">
+<div class="text-yellow-400 text-sm">★★★★★</div>
+<span class="text-zinc-400 text-sm">(248)</span>
+</div>
+
+<div class="flex items-center gap-3 mt-4">
+<p class="text-pink-500 text-2xl font-black">R$ ${product.price}</p>
+<span class="text-zinc-400 line-through text-sm">R$ ${product.oldPrice}</span>
+</div>
+
+<div class="mt-5">
+<p class="text-xs uppercase tracking-[2px] text-zinc-500 mb-3">Tamanho</p>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-xl border border-zinc-200 hover:bg-black hover:text-white transition">P</button>
+<button class="w-10 h-10 rounded-xl border border-zinc-200 hover:bg-black hover:text-white transition">M</button>
+<button class="w-10 h-10 rounded-xl border border-zinc-200 hover:bg-black hover:text-white transition">G</button>
+</div>
+</div>
+
+<button onclick="addToCart('${product.name}','${product.price}')" class="w-full mt-6 h-14 rounded-2xl bg-[#111] text-white uppercase tracking-[3px] text-xs font-bold hover:bg-pink-500 transition">
+Adicionar ao carrinho
+</button>
+
+</div>
+
+`;
+
+grid.appendChild(card);
+}
+}
+
+function addToCart(name, price){
+
+cart.push({name,price});
+
+cartCount.innerText = cart.length;
+
+renderCart();
+}
+
+function renderCart(){
+
+cartItems.innerHTML = '';
+
+cart.forEach(item => {
+
+cartItems.innerHTML += `
+<div class="flex items-center justify-between border-b border-zinc-100 pb-4">
+<div>
+<h4 class="font-bold">${item.name}</h4>
+<p class="text-pink-500 font-bold">R$ ${item.price}</p>
+</div>
+<button class="text-red-500">Remover</button>
+</div>
+`;
+
+});
+}
+
+function quickView(product){
+alert('Visualizando produto: ' + product);
+}
+
+function addWishlist(product){
+alert(product + ' adicionado aos favoritos');
+}
+
+const cartButton = document.getElementById('cartButton');
+const cartModal = document.getElementById('cartModal');
+const closeCart = document.getElementById('closeCart');
+
+cartButton.addEventListener('click', () => {
+cartModal.style.right = '0';
+});
+
+closeCart.addEventListener('click', () => {
+cartModal.style.right = '-100%';
+});
+
+renderProducts();
+
+</script>
+
+</body>
+</html>
+```
