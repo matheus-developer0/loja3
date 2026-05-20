@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRON EVOLUTION | Ultra Motion & Full Content</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- GSAP para Motion de Alta Performance -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #ff0000;
+            --dark: #050505;
+            --gray-card: #0f0f0f;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: white;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Cursor Personalizado */
+        #custom-cursor {
+            width: 8px; height: 8px; background: var(--primary);
+            border-radius: 50%; position: fixed; pointer-events: none;
+            z-index: 9999; mix-blend-mode: difference;
+        }
+
+        #cursor-follower {
+            width: 40px; height: 40px; border: 1px solid var(--primary);
+            border-radius: 50%; position: fixed; pointer-events: none;
+            z-index: 9998; transition: transform 0.15s ease;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            color: transparent;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070');
+            background-size: cover; background-position: center; height: 100vh;
+        }
+
+        /* Motion: Reveal effect */
+        .reveal-hidden { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }
+
+        /* Tilt 3D */
+        .tilt-card { transform-style: preserve-3d; perspective: 1000px; }
+
+        /* Marquee */
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { display: flex; width: 200%; animation: marquee 25s linear infinite; }
+
+        .card-glass {
+            background: var(--gray-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-glass:hover {
+            border-color: var(--primary);
+            background: #151515;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .magnetic-wrap { display: inline-block; }
+
+        /* Accordion Custom */
+        .faq-item[open] summary i { transform: rotate(180deg); }
+        summary { list-style: none; }
+        summary::-webkit-details-marker { display: none; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); }
+    </style>
+</head>
+<body class="bg-[#050505]">
+
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <!-- Header / Nav -->
+    <header id="navbar" class="fixed w-full z-[100] py-4 transition-all duration-500 border-b border-white/5 bg-black/50 backdrop-blur-md">
+        <nav class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-2xl font-black tracking-tighter cursor-pointer">
+                IRON<span class="text-[#ff0000]">EVOLUTION</span>
+            </div>
+            
+            <div class="hidden lg:flex space-x-8 uppercase font-bold text-[10px] tracking-[0.2em]">
+                <a href="#home" class="hover:text-[#ff0000] transition-colors">Início</a>
+                <a href="#metodologia" class="hover:text-[#ff0000] transition-colors">Metodologia</a>
+                <a href="#modalidades" class="hover:text-[#ff0000] transition-colors">Treinos</a>
+                <a href="#horarios" class="hover:text-[#ff0000] transition-colors">Horários</a>
+                <a href="#coaches" class="hover:text-[#ff0000] transition-colors">Equipa</a>
+                <a href="#planos" class="hover:text-[#ff0000] transition-colors">Planos</a>
+            </div>
+
+            <div class="magnetic-wrap">
+                <a href="#planos" class="bg-[#ff0000] text-white px-6 py-2 font-black text-[10px] uppercase tracking-widest rounded-sm hover:scale-105 transition-transform inline-block">
+                    Acesso Elite
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient flex items-center relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl">
+                <h1 class="text-6xl md:text-[8rem] font-black leading-[0.85] tracking-tighter mb-8">
+                    <div class="overflow-hidden"><span class="inline-block hero-title">DOMINA A TUA</span></div>
+                    <div class="overflow-hidden"><span class="inline-block hero-title text-[#ff0000]">BIOLOGIA</span></div>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-xl mb-10 opacity-0 hero-desc">
+                    A Iron Evolution combina ciência desportiva de elite com um ambiente de alta intensidade. Aqui, os dados guiam o suor.
+                </p>
+                <div class="flex flex-wrap gap-4 opacity-0 hero-btns">
+                    <button class="bg-white text-black px-10 py-4 font-black uppercase tracking-widest hover:bg-[#ff0000] hover:text-white transition-all">
+                        Marcar Visita
+                    </button>
+                    <button class="border border-white/20 px-10 py-4 font-black uppercase tracking-widest hover:border-[#ff0000] transition-all">
+                        Ver Estrutura
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 right-10 flex flex-col gap-4 text-xs font-bold tracking-widest uppercase opacity-20">
+            <span>24/7 Access</span>
+            <span>Premium Tech</span>
+            <span>Elite Coaches</span>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="bg-[#ff0000] py-4 overflow-hidden shadow-2xl relative z-20">
+        <div class="animate-marquee whitespace-nowrap flex items-center">
+            <span class="text-black font-black text-2xl uppercase mx-12 italic">Bio-Feedback em Tempo Real • Recuperação Ativa • Nutrição Sistémica • Força Bruta • </span>
+            <span class="text-black font-black text-2xl uppercase mx-12 italic">Bio-Feedback em Tempo Real • Recuperação Ativa • Nutrição Sistémica • Força Bruta • </span>
+        </div>
+    </div>
+
+    <!-- Metodologia (Informação densa) -->
+    <section id="metodologia" class="py-32 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-5xl font-black mb-8 leading-none">O NOSSO <br><span class="text-[#ff0000]">SISTEMA DE TREINO</span></h2>
+                    <p class="text-gray-400 mb-8 leading-relaxed text-lg">
+                        Ao contrário das academias convencionais, a Iron Evolution utiliza o método <strong>EVO-3</strong>, focado em três pilares fundamentais para garantir que o teu progresso nunca estagna.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-6 p-6 bg-white/5 rounded-xl border-l-4 border-[#ff0000]">
+                            <span class="text-3xl font-black text-[#ff0000]">01</span>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Análise Biomecânica</h4>
+                                <p class="text-sm text-gray-500">Mapeamos cada desvio postural e otimizamos a alavanca de cada exercício para máxima ativação muscular.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 p-6 bg-white/5 rounded-xl border-l-4 border-white/20">
+                            <span class="text-3xl font-black text-white/40">02</span>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Sobrecarga Progressiva Guiada</h4>
+                                <p class="text-sm text-gray-500">Utilizamos o nosso App exclusivo para calcular o teu volume semanal e garantir a progressão de cargas.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6 p-6 bg-white/5 rounded-xl border-l-4 border-white/20">
+                            <span class="text-3xl font-black text-white/40">03</span>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Bio-Recuperação</h4>
+                                <p class="text-sm text-gray-500">Protocolos de sono, hidratação e suplementação integrados no teu plano de treino.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative" data-aos="fade-left">
+                    <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=1000" class="rounded-3xl grayscale shadow-2xl" alt="Treino">
+                    <div class="absolute -bottom-10 -left-10 bg-[#ff0000] p-10 rounded-2xl hidden md:block">
+                        <div class="text-4xl font-black">+850</div>
+                        <div class="text-[10px] font-bold uppercase tracking-widest">Atletas Transformados</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grelha de Horários -->
+    <section id="horarios" class="py-32 bg-[#050505] border-y border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="text-6xl font-black">HORÁRIO DAS <span class="text-[#ff0000]">BATALHAS</span></h2>
+                <p class="text-gray-500 mt-4 uppercase tracking-[0.3em] text-xs">Planeia a tua semana de alta performance</p>
+            </div>
+
+            <div class="overflow-x-auto" data-aos="fade-up">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-white/10 text-[#ff0000] uppercase text-xs font-black tracking-widest">
+                            <th class="py-6 px-4">Hora</th>
+                            <th class="py-6 px-4">Segunda</th>
+                            <th class="py-6 px-4">Terça</th>
+                            <th class="py-6 px-4">Quarta</th>
+                            <th class="py-6 px-4">Quinta</th>
+                            <th class="py-6 px-4">Sexta</th>
+                            <th class="py-6 px-4">Sábado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-gray-400">
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <td class="py-6 px-4 font-bold text-white">07:00</td>
+                            <td class="py-6 px-4">Power Yoga</td>
+                            <td class="py-6 px-4">HIIT Core</td>
+                            <td class="py-6 px-4">Power Yoga</td>
+                            <td class="py-6 px-4">HIIT Core</td>
+                            <td class="py-6 px-4">Cross Train</td>
+                            <td class="py-6 px-4">Open Box</td>
+                        </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <td class="py-6 px-4 font-bold text-white">10:00</td>
+                            <td class="py-6 px-4">Iron Strength</td>
+                            <td class="py-6 px-4">BJJ Intro</td>
+                            <td class="py-6 px-4">Iron Strength</td>
+                            <td class="py-6 px-4">BJJ Intro</td>
+                            <td class="py-6 px-4">Iron Strength</td>
+                            <td class="py-6 px-4">Endurance</td>
+                        </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <td class="py-6 px-4 font-bold text-white">18:30</td>
+                            <td class="py-6 px-4 text-[#ff0000] font-bold">Muay Thai</td>
+                            <td class="py-6 px-4 text-[#ff0000] font-bold">Cross Train</td>
+                            <td class="py-6 px-4 text-[#ff0000] font-bold">Muay Thai</td>
+                            <td class="py-6 px-4 text-[#ff0000] font-bold">Cross Train</td>
+                            <td class="py-6 px-4 text-[#ff0000] font-bold">Fight Night</td>
+                            <td class="py-6 px-4">Recovery</td>
+                        </tr>
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <td class="py-6 px-4 font-bold text-white">20:00</td>
+                            <td class="py-6 px-4">Bodybuilding Lab</td>
+                            <td class="py-6 px-4">Yoga Flow</td>
+                            <td class="py-6 px-4">Bodybuilding Lab</td>
+                            <td class="py-6 px-4">Yoga Flow</td>
+                            <td class="py-6 px-4">Bodybuilding Lab</td>
+                            <td class="py-6 px-4">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-center mt-12 text-gray-600 text-xs uppercase tracking-widest font-bold">Acesso à sala de musculação livre 24 horas por dia para todos os membros.</p>
+        </div>
+    </section>
+
+    <!-- Coaches (Novas Informações) -->
+    <section id="coaches" class="py-32 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-20">
+                <div>
+                    <h2 class="text-6xl font-black">TREINADORES <br><span class="text-[#ff0000]">DE ELITE</span></h2>
+                </div>
+                <div class="max-w-xs text-right hidden md:block">
+                    <p class="text-gray-500 text-xs uppercase font-bold tracking-widest leading-loose">Mestres em fisiologia e biomecânica prontos para redefinir os teus limites.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Coach 1 -->
+                <div class="group relative overflow-hidden rounded-2xl" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=600" class="grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 h-[450px] w-full object-cover" alt="Coach">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90 translate-y-2/3 group-hover:translate-y-0 transition-transform duration-500 p-8 flex flex-col justify-end">
+                        <h4 class="text-2xl font-black">Ricardo Silva</h4>
+                        <p class="text-[#ff0000] font-bold text-xs mb-4">Head of Bodybuilding</p>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6">Especialista em hipertrofia avançada e nutrição desportiva com 12 anos de experiência.</p>
+                        <div class="flex gap-4">
+                            <i class="fab fa-instagram hover:text-[#ff0000] cursor-pointer"></i>
+                            <i class="fab fa-linkedin hover:text-[#ff0000] cursor-pointer"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Coach 2 -->
+                <div class="group relative overflow-hidden rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1548690312-e3b507d17a47?q=80&w=600" class="grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 h-[450px] w-full object-cover" alt="Coach">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90 translate-y-2/3 group-hover:translate-y-0 transition-transform duration-500 p-8 flex flex-col justify-end">
+                        <h4 class="text-2xl font-black">Ana Martins</h4>
+                        <p class="text-[#ff0000] font-bold text-xs mb-4">Performance Coach</p>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6">Ex-atleta olímpica focada em mobilidade funcional e condicionamento de alta intensidade.</p>
+                        <div class="flex gap-4">
+                            <i class="fab fa-instagram hover:text-[#ff0000] cursor-pointer"></i>
+                            <i class="fab fa-linkedin hover:text-[#ff0000] cursor-pointer"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Coach 3 -->
+                <div class="group relative overflow-hidden rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600" class="grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 h-[450px] w-full object-cover" alt="Coach">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90 translate-y-2/3 group-hover:translate-y-0 transition-transform duration-500 p-8 flex flex-col justify-end">
+                        <h4 class="text-2xl font-black">Marco Rossi</h4>
+                        <p class="text-[#ff0000] font-bold text-xs mb-4">Fight Master</p>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6">Faixa preta de Jiu-Jitsu e treinador de MMA focado em força e explosão.</p>
+                        <div class="flex gap-4">
+                            <i class="fab fa-instagram hover:text-[#ff0000] cursor-pointer"></i>
+                            <i class="fab fa-linkedin hover:text-[#ff0000] cursor-pointer"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Coach 4 -->
+                <div class="group relative overflow-hidden rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=600" class="grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 h-[450px] w-full object-cover" alt="Coach">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90 translate-y-2/3 group-hover:translate-y-0 transition-transform duration-500 p-8 flex flex-col justify-end">
+                        <h4 class="text-2xl font-black">Elena Kovac</h4>
+                        <p class="text-[#ff0000] font-bold text-xs mb-4">Recovery Specialist</p>
+                        <p class="text-gray-400 text-xs leading-relaxed mb-6">Especialista em reabilitação e pilates clínico para otimização de longevidade atlética.</p>
+                        <div class="flex gap-4">
+                            <i class="fab fa-instagram hover:text-[#ff0000] cursor-pointer"></i>
+                            <i class="fab fa-linkedin hover:text-[#ff0000] cursor-pointer"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-32 bg-[#0a0a0a]">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-5xl font-black text-center mb-20 uppercase">Perguntas <span class="text-[#ff0000]">Frequentes</span></h2>
+            
+            <div class="space-y-4">
+                <details class="faq-item group card-glass p-6 rounded-xl cursor-pointer" data-aos="fade-up">
+                    <summary class="flex justify-between items-center font-bold text-lg uppercase tracking-wider">
+                        Preciso de experiência prévia para treinar aqui?
+                        <i class="fas fa-chevron-down text-[#ff0000] transition-transform"></i>
+                    </summary>
+                    <div class="mt-4 text-gray-400 leading-relaxed text-sm">
+                        Não. Embora sejamos focados em performance, temos programas de "Onboarding" para iniciantes onde ensinamos as bases da biomecânica antes de passares para treinos de alta intensidade.
+                    </div>
+                </details>
+
+                <details class="faq-item group card-glass p-6 rounded-xl cursor-pointer" data-aos="fade-up">
+                    <summary class="flex justify-between items-center font-bold text-lg uppercase tracking-wider">
+                        Como funciona o acesso 24 horas?
+                        <i class="fas fa-chevron-down text-[#ff0000] transition-transform"></i>
+                    </summary>
+                    <div class="mt-4 text-gray-400 leading-relaxed text-sm">
+                        Todos os membros Elite recebem uma pulseira magnética (ou acesso via App NFC) que permite a entrada no ginásio a qualquer hora do dia ou da noite, com segurança monitorizada 24/7.
+                    </div>
+                </details>
+
+                <details class="faq-item group card-glass p-6 rounded-xl cursor-pointer" data-aos="fade-up">
+                    <summary class="flex justify-between items-center font-bold text-lg uppercase tracking-wider">
+                        O acompanhamento com treinador está incluído?
+                        <i class="fas fa-chevron-down text-[#ff0000] transition-transform"></i>
+                    </summary>
+                    <div class="mt-4 text-gray-400 leading-relaxed text-sm">
+                        O plano Iron Evolution inclui a configuração inicial do treino e revisões mensais. Se procuras um acompanhamento 1-para-1 em cada sessão, dispomos do serviço Iron Black VIP.
+                    </div>
+                </details>
+
+                <details class="faq-item group card-glass p-6 rounded-xl cursor-pointer" data-aos="fade-up">
+                    <summary class="flex justify-between items-center font-bold text-lg uppercase tracking-wider">
+                        Posso treinar em qualquer unidade Iron?
+                        <i class="fas fa-chevron-down text-[#ff0000] transition-transform"></i>
+                    </summary>
+                    <div class="mt-4 text-gray-400 leading-relaxed text-sm">
+                        Sim, o plano Evolution e Black permitem acesso livre a todas as unidades Iron Evolution em Portugal e Espanha.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato" class="py-20 border-t border-white/5 bg-black px-6">
+        <div class="container mx-auto">
+            <div class="grid md:grid-cols-4 gap-12 mb-20">
+                <div class="col-span-2">
+                    <div class="text-3xl font-black mb-6">IRON<span class="text-[#ff0000]">EVOLUTION</span></div>
+                    <p class="text-gray-500 max-w-sm mb-8">Onde a ciência encontra a força bruta. O ginásio mais avançado do país à tua espera.</p>
+                    <div class="flex gap-6">
+                        <i class="fab fa-instagram text-2xl hover:text-[#ff0000] transition-colors cursor-pointer"></i>
+                        <i class="fab fa-tiktok text-2xl hover:text-[#ff0000] transition-colors cursor-pointer"></i>
+                        <i class="fab fa-youtube text-2xl hover:text-[#ff0000] transition-colors cursor-pointer"></i>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-black mb-6 uppercase text-sm tracking-widest text-[#ff0000]">Contacto</h5>
+                    <ul class="text-gray-500 space-y-4 text-sm font-bold">
+                        <li>+351 912 345 678</li>
+                        <li>elite@iron-evolution.pt</li>
+                        <li>Av. da Liberdade, 1050, Lisboa</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-black mb-6 uppercase text-sm tracking-widest text-[#ff0000]">Horário Recepção</h5>
+                    <ul class="text-gray-500 space-y-4 text-sm">
+                        <li>Seg - Sex: 07:00 - 22:00</li>
+                        <li>Sáb: 09:00 - 18:00</li>
+                        <li>Dom: Descanso Ativo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] text-gray-600 font-black uppercase tracking-widest">© 2024 Iron Evolution. Todos os direitos reservados.</p>
+                <div class="flex gap-8 text-[10px] text-gray-600 font-black uppercase tracking-widest">
+                    <a href="#" class="hover:text-white transition-colors">Termos</a>
+                    <a href="#" class="hover:text-white transition-colors">Cookies</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true });
+
+        const cursor = document.getElementById('custom-cursor');
+        const follower = document.getElementById('cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to(follower, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.2 });
+        });
+
+        // Hover effect for cursor
+        document.querySelectorAll('a, button, summary, .group').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                follower.style.transform = 'scale(1.8)';
+                follower.style.background = 'rgba(255, 0, 0, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                follower.style.transform = 'scale(1)';
+                follower.style.background = 'transparent';
+            });
+        });
+
+        // GSAP Hero Entry
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to('.hero-title', { y: 0, duration: 1, stagger: 0.2, ease: "power4.out" })
+              .to('.hero-desc', { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
+              .to('.hero-btns', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6");
+        });
+
+        // Magnetism
+        document.querySelectorAll('.magnetic-wrap').forEach(wrap => {
+            wrap.addEventListener('mousemove', (e) => {
+                const rect = wrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(wrap, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+            });
+            wrap.addEventListener('mouseleave', () => {
+                gsap.to(wrap, { x: 0, y: 0, duration: 0.5 });
+            });
+        });
+    </script>
+</body>
+</html>
